@@ -30,11 +30,36 @@ The testbench (`tb/uvm/`) is structured strictly following UVM 1.2 class hierarc
 
 ---
 
-## ⚙️ How to Run & Simulate (EDA Playground)
+## 🚀 Live Demo (EDA Playground)
+
+The complete UVM testbench compiles and runs natively using **Cadence Xcelium 20.09**.
+
+👉 **[Click Here to View & Run the Project on EDA Playground](#)** *(Add your public link here)*
+
+### Simulation Log Results
+*Expected Output:*
+```text
+[APB_SCB] MATCH! ADDR='h00000010 PRDATA='hdeadbeef Expected='hdeadbeef
+...
+[APB_SCB_REPORT] ========================================
+[APB_SCB_REPORT] Total Matches   : [X]
+[APB_SCB_REPORT] Total Mismatches: 0
+[APB_SCB_REPORT] ========================================
+[TEST_PASSED] Simulation completed successfully with 0 mismatches.
+```
+
+### APB Write/Read Waveforms (EPWave)
+![APB Timing](docs/apb_waveform.png)
+
+*(Note: The above diagram illustrates the `PSEL`, `PENABLE`, `PWRITE`, and `PREADY` handshake verified by SVA).*
+
+---
+
+## ⚙️ How to Setup (Local or Cloud)
 
 Standard UVM 1.2 requires commercial simulators (like Cadence Xcelium or Synopsys VCS) for full class/macro support. 
 
-To run this project for free, use **EDA Playground** with **Cadence Xcelium 20.09**:
+To run this project for free, use **EDA Playground**:
 
 1. Open [EDA Playground](https://edaplayground.com/).
 2. **Testbench + Design files**: Upload or paste all the `.sv` and `.v` files into the left and right panes.

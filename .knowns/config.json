@@ -1,0 +1,27 @@
+{
+  "name": "AMBA_APB_UVM",
+  "id": "amba_apb_uvm",
+  "createdAt": "2026-02-25T05:09:31.784Z",
+  "settings": {
+    "defaultPriority": "medium",
+    "defaultLabels": [],
+    "timeFormat": "24h",
+    "visibleColumns": [
+      "todo",
+      "in-progress",
+      "blocked",
+      "done",
+      "in-review"
+    ],
+    "serverPort": 6420,
+    "semanticSearch": {
+      "enabled": false,
+      "model": "gte-small"
+    },
+    "search": {
+      "semantic": {
+        "enabled": true
+      }
+    }
+  }
+}
