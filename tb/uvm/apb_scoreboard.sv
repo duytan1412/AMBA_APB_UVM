@@ -28,25 +28,21 @@ class apb_scoreboard extends uvm_scoreboard;
         num_mismatches = 0;
     endfunction
 
-    // Write function called by the monitor via analysis port
+    // APB monitor callback
     virtual function void write(apb_transaction tr);
         
-        // Handle Write Transaction
         if (tr.pwrite) begin
             if (!tr.pslverr) begin
-                // Update reference memory on successful write
                 ref_mem[tr.paddr] = tr.pwdata;
                 `uvm_info("APB_SCB", $sformatf("Stored PWDATA='h%08x to ADDR='h%08x in ref_mem", tr.pwdata, tr.paddr), UVM_HIGH)
             end else begin
                 `uvm_info("APB_SCB", $sformatf("Ignored Write Error at ADDR='h%08x", tr.paddr), UVM_HIGH)
             end
         end 
-        // Handle Read Transaction
         else begin
             if (!tr.pslverr) begin
                 logic [31:0] expected_data;
                 
-                // If it's a valid read, compare PRDATA with our model
                 if (ref_mem.exists(tr.paddr)) begin
                     expected_data = ref_mem[tr.paddr];
                 end else begin

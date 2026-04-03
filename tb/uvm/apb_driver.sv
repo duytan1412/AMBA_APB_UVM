@@ -29,7 +29,6 @@ class apb_driver extends uvm_driver#(apb_transaction);
         vif.penable <= 0;
         vif.pwdata  <= 0;
 
-        // Wait for reset to finish
         @(posedge vif.presetn);
         `uvm_info("APB_DRV", "Reset finished, starting driver loop", UVM_LOW)
 
@@ -55,8 +54,6 @@ class apb_driver extends uvm_driver#(apb_transaction);
         vif.penable <= 1'b1;
 
         // Wait for PREADY
-        // Using property checking, PREADY should be asserted by slave
-        // We will sample continuously until PREADY is high
         forever begin
             @(posedge vif.pclk);
             if (vif.pready) begin

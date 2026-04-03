@@ -26,14 +26,12 @@ class apb_monitor extends uvm_monitor;
     virtual task run_phase(uvm_phase phase);
         apb_transaction tr;
         
-        // Wait for reset to finish
         @(posedge vif.presetn);
         `uvm_info("APB_MON", "Reset finished, starting monitor loop", UVM_LOW)
 
         forever begin
             @(posedge vif.pclk);
             
-            // Only sample data when a transfer is complete: PENABLE and PREADY are both high
             if (vif.psel && vif.penable && vif.pready) begin
                 tr = apb_transaction::type_id::create("tr");
                 tr.paddr   = vif.paddr;
