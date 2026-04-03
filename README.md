@@ -2,94 +2,166 @@
 
 ![CI](https://github.com/duytan1412/AMBA_APB_UVM/actions/workflows/uvm-ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![UVM](https://img.shields.io/badge/UVM-1.2-green.svg)
+![Tool](https://img.shields.io/badge/Cadence-Xcelium%2020.09-orange.svg)
 
-This repository contains a complete **Universal Verification Methodology (UVM)** testbench developed from scratch to verify an **AMBA APB (Advanced Peripheral Bus)** Slave Memory module (`apb_ram.v`).
+A complete **Universal Verification Methodology (UVM 1.2)** testbench developed from scratch to verify an **AMBA APB (Advanced Peripheral Bus)** Slave Memory module.
 
-It demonstrates a professional "Verification-First" mindset, utilizing **SystemVerilog Assertions (SVA)**, **Functional Coverage**, and a **UVM-centric architecture**, tailored for Junior Design Verification Engineer roles.
-
----
-
-## 🏗 System Architecture
-
-### 1. The Design Under Test (DUT): APB RAM
-The RTL (`rtl/apb_ram.v`) is a simplified memory mapped to an APB Interface.
-*   **Protocol:** AMBA APB (Setup Phase & Access Phase).
-*   **Data Width:** 32-bit `PWDATA` and `PRDATA`.
-*   **Address Width:** 32-bit `PADDR` (Byte-addressable, word-aligned accesses).
-*   **Features:** Zero wait-state `PREADY` generation, `PSLVERR` generation on unaligned addresses or out-of-bounds access.
-
-### 2. The UVM Environment
-The testbench (`tb/uvm/`) is structured strictly following UVM 1.2 class hierarchies:
-*   **`apb_transaction.sv`**: Defines randomized APB Sequence Items with word-alignment constraints.
-*   **`apb_sequence.sv`**: Generates Single Write, Single Read, Burst, and Write-Read verification scenarios.
-*   **`apb_driver.sv`**: Translates UVM transactions into precise APB bus wiggles (driving `PSEL`, `PENABLE`, etc.).
-*   **`apb_monitor.sv`**: Passively sniffs the APB bus and broadcasts captured transactions via an Analysis Port.
-*   **`apb_agent.sv`**: Encapsulates the Driver, Sequencer, and Monitor.
-*   **`apb_scoreboard.sv`**: Implements a *Reference Memory Model* using SystemVerilog Associative Arrays to predict and verify `PRDATA`.
-*   **`apb_if.sv`**: The hardware interface, loaded with **SystemVerilog Assertions (SVA)** to catch APB protocol violations instantly.
+Demonstrates a professional "**Verification-First**" mindset: **SystemVerilog Assertions (SVA)**, **Functional Coverage**, **Constrained-Random Verification**, and a full **UVM class hierarchy**.
 
 ---
 
-## 🚀 Live Demo (EDA Playground)
+## 🏗 UVM Environment Architecture
 
-The complete UVM testbench compiles and runs natively using **Cadence Xcelium 20.09**.
-
-👉 **[Click Here to View & Run the Project on EDA Playground](#)** *(Add your public link here)*
-
-### Simulation Log Results
-*Expected Output:*
-```text
-[APB_SCB] MATCH! ADDR='h00000010 PRDATA='hdeadbeef Expected='hdeadbeef
-...
-[APB_SCB_REPORT] ========================================
-[APB_SCB_REPORT] Total Matches   : [X]
-[APB_SCB_REPORT] Total Mismatches: 0
-[APB_SCB_REPORT] ========================================
-[TEST_PASSED] Simulation completed successfully with 0 mismatches.
+```
+┌───────────────────────────────────────────────────────────────┐
+│                        apb_test                               │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │                      apb_env                            │  │
+│  │                                                         │  │
+│  │  ┌─────────────────┐   ┌──────────────┐                │  │
+│  │  │    apb_agent     │   │ apb_scoreboard│                │  │
+│  │  │  ┌─────────────┐│   │ (Ref Model)  │                │  │
+│  │  │  │ apb_driver   ││   └──────────────┘                │  │
+│  │  │  ├─────────────┤│                                    │  │
+│  │  │  │ apb_sequencer││   ┌──────────────┐                │  │
+│  │  │  ├─────────────┤│   │ apb_coverage  │                │  │
+│  │  │  │ apb_monitor  ││   │ (Func Cov)   │                │  │
+│  │  │  └─────────────┘│   └──────────────┘                │  │
+│  │  └─────────────────┘                                    │  │
+│  └─────────────────────────────────────────────────────────┘  │
+│                         ↕ apb_if (4 SVA Properties)           │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │              DUT: apb_ram (APB Slave Memory)            │  │
+│  │         32-bit data | 32-bit addr | PSLVERR support     │  │
+│  └─────────────────────────────────────────────────────────┘  │
+└───────────────────────────────────────────────────────────────┘
 ```
 
-### APB Write/Read Waveforms (EPWave)
-![APB Timing](docs/apb_waveform.png)
+### Component Details
 
-*(Note: The above diagram illustrates the `PSEL`, `PENABLE`, `PWRITE`, and `PREADY` handshake verified by SVA).*
-
----
-
-## ⚙️ How to Setup (Local or Cloud)
-
-Standard UVM 1.2 requires commercial simulators (like Cadence Xcelium or Synopsys VCS) for full class/macro support. 
-
-To run this project for free, use **EDA Playground**:
-
-1. Open [EDA Playground](https://edaplayground.com/).
-2. **Testbench + Design files**: Upload or paste all the `.sv` and `.v` files into the left and right panes.
-3. Configure settings on the left:
-    *   **Languages & Libraries:** SystemVerilog / Verilog
-    *   **UVM / OVM:** UVM 1.2
-    *   **Tools & Simulators:** Cadence Xcelium 20.09
-    *   **Run Options:** Leave default.
-4. Set the "Top module" to `tb_top`.
-5. Click **Run**.
-6. Check the console log for UVM output indicating `Total Mismatches: 0`.
-
-*(Alternatively, use `make all` if you have a UVM-patched version of Icarus Verilog or Verilator installed locally).*
+| File | Role | Key Features |
+|------|------|-------------|
+| `apb_transaction.sv` | Sequence Item | Randomized R/W, word-alignment constraints |
+| `apb_sequence.sv` | Test Scenarios | Single Write, Single Read, Burst, Write-Read-Back |
+| `apb_driver.sv` | Bus Driver | APB Setup/Access phase protocol, PREADY wait |
+| `apb_monitor.sv` | Passive Observer | Analysis port broadcast to scoreboard & coverage |
+| `apb_agent.sv` | Agent Container | Encapsulates Driver + Sequencer + Monitor |
+| `apb_scoreboard.sv` | Self-Checking | Associative array ref model, mismatch counter |
+| `apb_coverage.sv` | Coverage Collector | R/W x Addr cross, data patterns, B2B timing |
+| `apb_if.sv` | HW Interface + SVA | 4 protocol assertions (PENABLE, PREADY, stability) |
 
 ---
 
-## 🔬 Key Verification Features Highlighted
+## 🔬 Key Verification Features
 
-1.  **Assertion Based Verification (ABV):** 
-    Embedded properties in the Interface guarantee standard compliance (e.g., `PENABLE` asserting 1 cycle after `PSEL`).
-2.  **Reference Modeling:**
-    Scoreboard independently tracks memory states and compares `PRDATA` in real-time against expected values.
-3.  **Constrained-Random Verification (CRV):**
-    Utilizes UVM sequences to blast random addresses and data, exposing edge-case failures.
-4.  **Triage/Debug Ready:**
-    Custom `convert2string()` methods and standard `uvm_info` macros trace exactly what the driver and monitor are transacting.
+### 1. Assertion-Based Verification (ABV)
+4 SVA properties embedded in `apb_if.sv`:
+```systemverilog
+// PENABLE must rise 1 cycle after PSEL
+($rose(psel) |=> penable);
+
+// PSEL/PENABLE stable until PREADY
+(psel && penable && !pready) |=> (psel && penable);
+
+// Control signals stable during access phase
+(psel && !penable) |=> ($stable(paddr) && $stable(pwrite));
+
+// PENABLE falls after PREADY
+(penable && pready) |=> (!penable);
+```
+
+### 2. Reference Model Scoreboard
+- Uses SystemVerilog **associative arrays** as golden memory model
+- Real-time comparison of `PRDATA` vs expected values
+- Final report with match/mismatch statistics
+
+### 3. Functional Coverage (`apb_coverage.sv`)
+```
+Coverage Groups:
+├── cg_apb_protocol
+│   ├── cp_operation:   READ / WRITE
+│   ├── cp_addr_range:  Low (0x00-0x3C) / Mid (0x40-0x7C) / High (0x80+)
+│   ├── cp_write_data:  All-zeros / All-ones / Walking-one / Random
+│   ├── cp_slverr:      No Error / Error
+│   ├── cx_op_addr:     CROSS (operation × address)
+│   └── cx_op_err:      CROSS (operation × error)
+└── cg_apb_timing
+    └── cp_b2b_ops:     W→W / R→W / W→R / R→R transitions
+```
+
+### 4. Constrained-Random Verification (CRV)
+UVM sequences generate randomized traffic with constraints ensuring word-aligned addresses and valid coin/data patterns.
+
+---
+
+## 📂 Project Structure
+
+```
+AMBA_APB_UVM/
+├── rtl/
+│   └── apb_ram.sv              # DUT: APB Slave Memory (SystemVerilog)
+├── tb/
+│   └── uvm/
+│       ├── apb_if.sv           # Interface + 4 SVA Assertions
+│       ├── apb_transaction.sv  # Randomized Sequence Item
+│       ├── apb_sequence.sv     # Test Scenarios
+│       ├── apb_driver.sv       # APB Protocol Driver
+│       ├── apb_monitor.sv      # Passive Bus Monitor
+│       ├── apb_agent.sv        # Agent (Driver + Sequencer + Monitor)
+│       ├── apb_scoreboard.sv   # Self-Checking Reference Model
+│       ├── apb_coverage.sv     # Functional Coverage Collector
+│       ├── apb_env.sv          # Environment
+│       └── tb_top.sv           # Top-level Test Module
+├── docs/
+│   └── apb_waveform.png        # EPWave timing diagram
+├── .github/workflows/
+│   └── uvm-ci.yml              # CI: Syntax lint (iverilog)
+├── Makefile
+└── README.md
+```
+
+---
+
+## ⚙️ How to Run
+
+### Option 1: EDA Playground (Recommended)
+
+> Full UVM 1.2 requires commercial simulators. Use EDA Playground for free.
+
+1. Open [EDA Playground](https://edaplayground.com/)
+2. Upload all `.sv` files into testbench/design panes
+3. Configure:
+   - **Languages:** SystemVerilog/Verilog
+   - **UVM:** UVM 1.2
+   - **Simulator:** Cadence Xcelium 20.09
+   - **Top Module:** `tb_top`
+4. Click **Run**
+5. Verify: Console shows `Total Mismatches: 0`
+
+### Option 2: Local (Syntax Check Only)
+
+```bash
+make compile    # Requires iverilog with -g2012 support
+```
+
+> ⚠️ CI badge runs **syntax lint only** via iverilog. Full UVM simulation requires Xcelium/VCS.
+
+---
+
+## 🎯 CI Pipeline
+
+| Step | Tool | What it checks |
+|------|------|---------------|
+| RTL Lint | iverilog -g2012 | `apb_ram.sv` syntax |
+| Interface Lint | iverilog -g2012 | `apb_if.sv` SVA syntax |
+| Transaction Lint | iverilog -g2012 | `apb_transaction.sv` model |
+| Full UVM Sim | Xcelium 20.09 | Complete testbench (EDA Playground) |
 
 ---
 
 ## 👨‍💻 Author
+
 **Bì Duy Tân**
 - LinkedIn: [linkedin.com/in/bi-duy-tan](https://linkedin.com/in/bi-duy-tan)
 - Target Role: Design Verification Engineer

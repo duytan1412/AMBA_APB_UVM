@@ -1,0 +1,22 @@
+# AI Tool Configuration (moved to d:\Project_AI_Backup\)
+.agent/
+.claude/
+.knowns/
+.kiro/
+.mcp.json
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+KNOWNS.md
+OPENCODE.md
+
+# Simulation artifacts
+*.vvp
+*.vcd
+*.log
+dump.*
+
+# IDE
+.vscode/
+*.swp
+*~

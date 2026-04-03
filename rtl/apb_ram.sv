@@ -89,41 +89,35 @@ module apb_ram #(
                 mem[i] <= '0;
             end
         end else begin
+            // Default: deassert ready each cycle (1-cycle pulse)
+            ready_reg <= 1'b0;
+            
             case (current_state)
                 IDLE: begin
-                    ready_reg <= 1'b0;
                     slverr_reg <= 1'b0;
                 end
                 
                 SETUP: begin
                     addr_reg <= PADDR;
                     if (valid_address) begin
-                        slverr_reg <= 1'b0; // No error if address is valid
+                        slverr_reg <= 1'b0;
                     end else begin
-                        slverr_reg <= 1'b1; // Error for out of bounds or misaligned
+                        slverr_reg <= 1'b1;
                     end
                 end
 
                 ACCESS: begin
-                    ready_reg <= 1'b1; // 0 wait state response
+                    ready_reg <= 1'b1; // Assert PREADY for exactly 1 cycle
                     
                     if (valid_address) begin
                         if (PWRITE) begin
-                            // Handle write
                             mem[PADDR[ADDR_WIDTH-1:2]] <= PWDATA;
                         end else begin
-                            // Handle read
                             rdata_reg <= mem[PADDR[ADDR_WIDTH-1:2]];
                         end
                     end
                 end
             endcase
-            
-            // Clear ready and error immediately after ACCESS phase completes
-            if (current_state == ACCESS && ready_reg) begin
-                ready_reg <= 1'b0;
-                slverr_reg <= 1'b0;
-            end
         end
     end
 

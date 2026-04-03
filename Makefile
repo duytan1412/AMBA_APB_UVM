@@ -9,7 +9,7 @@ RTL_DIR = rtl
 TB_DIR = tb/uvm
 
 # Source Files
-RTL_SRC = $(RTL_DIR)/apb_ram.v
+RTL_SRC = $(RTL_DIR)/apb_ram.sv
 TB_SRC  = $(TB_DIR)/tb_top.sv
 
 # Flags
