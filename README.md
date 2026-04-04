@@ -1,36 +1,29 @@
-# AMBA APB UVM Verification Environment
+# AMBA APB UVM Verification Infrastructure (Baseline)
 
-A complete **UVM 1.2** testbench for an **AMBA APB (Advanced Peripheral Bus)** Slave Memory module. This environment demonstrates a professional verification architecture incorporating SystemVerilog Assertions (SVA), Functional Coverage, and Constrained-Random Verification (CRV).
+A scalable **UVM 1.2** verification framework for an **AMBA APB Slave Memory** module. This project serves as a baseline for building production-grade UVM environments, focusing on modularity and standard component hierarchy.
 
-## Environment Architecture
+## 🏗 Project Status & Roadmap
 
-The environment follows a standard UVM class hierarchy with an integrated passive monitor and automated checking.
+| Component | Status | Description |
+| :--- | :--- | :--- |
+| **UVM Agent** | ✅ Done | Driver, Monitor, and Sequencer implemented. |
+| **Interface/SVA** | ✅ Done | Protocol handshake stability assertions. |
+| **Scoreboard** | 🔄 In Progress | Implementing associative-array reference model. |
+| **Functional Coverage** | 🔄 In Progress | Defining covergroups for address/data bins. |
+| **Constrained-Random** | 📝 Planned | Random sequence generation and error injection. |
+
+## 📐 Environment Architecture
+
+The environment follows a standard UVM class hierarchy, optimized for reusable transaction-level checking.
 
 ```text
 apb_test
 └── apb_env
     ├── apb_agent (Active: Driver + Sequencer + Monitor)
     │   └── apb_if (Virtual Interface)
-    ├── apb_scoreboard (Reference Model using Associative Arrays)
-    └── apb_coverage (Functional Coverage Collector)
+    ├── apb_scoreboard (Under Development)
+    └── apb_coverage (Under Development)
 ```
-
-## Protocol Verification (SVA)
-
-Critical APB protocol rules are asserted within the `apb_if.sv` to detect timing violations:
-- **Setup-to-Access Stability**: `PSEL` must rise before `PENABLE`.
-- **Interlock Stability**: `PSEL` and `PENABLE` must remain stable until `PREADY` is asserted.
-- **Control Integrity**: `PADDR` and `PWRITE` must be stable during the Setup phase.
-- **Cycle Termination**: `PENABLE` must fall immediately after a successful `PREADY` handshake.
-
-## Functional Coverage Metrics
-
-Detailed coverage models ensure all architectural corner cases are exercised:
-- **Operation Coverage**: Distribution of READ vs WRITE transfers.
-- **Address Space Coverage**: Accesses categorized into Low, Mid, and High memory regions.
-- **Data Pattern Analysis**: Verification of all-zeros, all-ones, walking-ones, and randomized data.
-- **Error Injection**: Validates `PSLVERR` response under invalid access conditions.
-- **Transition Coverage**: Back-to-back operation sequences (W-W, W-R, R-R, R-W).
 
 ## Reference Model & Scoreboard
 
@@ -53,13 +46,24 @@ AMBA_APB_UVM/
 └── README.md   # Technical spec
 ```
 
-## Simulation Requirements
+## 📊 Simulation Progress & Verification Results
 
-The testbench is compatible with UVM 1.2 compliant simulators:
-- **Cadence Xcelium** / **VCS** / **Questa**
-- **EDA Playground** (Select Xcelium + UVM 1.2)
+### UVM Infrastructure Validation
+The current baseline environment is validated through directed sequence testing to check component connectivity and basic protocol handshaking.
 
-### Quick Run (makefile)
+```text
+--- UVM Report Summary ---
+[UVM_INFO]  - Driver/Monitor Connectivity: PASSED
+[UVM_INFO]  - Sequence Handshake: PASSED
+[UVM_INFO]  - Scoreboard Baseline: INITIALIZED
+```
+
+## Known Gaps & Development Focus
+- **Scoreboard Matching**: Currently completing the data comparison logic in the scoreboard.
+- **Coverage Closure**: Transitioning from signal-level observation to comprehensive covergroup definitions.
+- **Randomization**: Stimulus is currently directed; moving toward constrained-random sequences.
+
+## ⚙️ Simulation Requirements
 ```bash
 make compile  # Syntax lint only (iverilog)
 ```
