@@ -2,7 +2,7 @@
 [![UVM](https://img.shields.io/badge/Methodology-UVM--1.2-blue)](https://accellera.org/downloads/standards/uvm)
 [![APB](https://img.shields.io/badge/Protocol-AMBA--APB-lightgrey)](https://developer.arm.com/documentation/ihi0024/c/)
 
-A structured **UVM-based verification environment** for an **AMBA APB Slave Memory**, developed as a portfolio project to demonstrate agent construction, protocol assertions, scoreboard checking, and functional coverage implementation.
+A structured UVM-based verification environment for an AMBA APB Slave Memory, developed as a portfolio project to demonstrate agent construction, protocol assertions, scoreboard checking, and functional coverage implementation.
 
 ---
 
@@ -10,11 +10,11 @@ A structured **UVM-based verification environment** for an **AMBA APB Slave Memo
 
 | Component | Status | Description |
 | :--- | :--- | :--- |
-| **UVM Agent** | ✅ Done | Complete Active Agent (Sequencer, Driver, Monitor). |
-| **Interface/SVA** | ✅ Done | 10+ Assertions for PSEL/PENABLE/PREADY protocol checks. |
-| **Scoreboard** | ✅ Done | Golden reference memory using SV associative arrays. |
-| **Functional Coverage**| ✅ Done | Covergroups for address space, data patterns, and timing. |
-| **Constrained-Random**| ✅ Done | Automated stimulus with error injection capabilities. |
+| UVM Agent | ✅ Done | Complete Active Agent (Sequencer, Driver, Monitor). |
+| Interface/SVA | ✅ Done | 10+ Assertions for PSEL/PENABLE/PREADY protocol checks. |
+| Scoreboard | ✅ Done | Golden reference memory using SV associative arrays. |
+| Functional Coverage | ✅ Done | Covergroups for address space, data patterns, and timing. |
+| Constrained-Random | ✅ Done | Automated stimulus with error injection capabilities. |
 
 ---
 
@@ -79,7 +79,7 @@ graph TD
 ### UVM Report Summary
 ```text
 --- UVM Report Summary ---
-** Report counts by severity
+Report counts by severity
 UVM_INFO :    45
 UVM_WARNING :    0
 UVM_ERROR :    0
@@ -93,7 +93,7 @@ run            : PASSED
   [APB_SCB] Total Mismatches: 0
   [TEST_PASSED] Simulation completed successfully.
 
-** Functional Coverage
+Functional Coverage
   cg_apb_protocol : 98.5% (Non-zero data patterns)
   cg_apb_timing   : 95.0% (Back-to-back sequences)
 > *Note: Remaining 5% coverage corresponds to rare illegal protocol transitions and specific SLVERR corner cases.*
@@ -125,4 +125,4 @@ make simulate COMPILER=vcs
 
 > [!NOTE]
 > This project was developed as a portfolio piece to demonstrate understanding of professional silicon-verification standards.
-> **Developed by: Bì Duy Tân** (Junior Verification Engineer).
+> Developed by: Bì Duy Tân (Junior Verification Engineer).

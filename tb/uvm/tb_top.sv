@@ -27,26 +27,26 @@ module tb_top;
 
     // Interface Instantiation
     apb_if vif(
-        .pclk(pclk),
-        .presetn(presetn)
+       .pclk(pclk),
+       .presetn(presetn)
     );
 
     // DUT Instantiation
     apb_ram #(
-        .ADDR_WIDTH(32),
-        .DATA_WIDTH(32),
-        .MEM_SIZE(256)
+       .ADDR_WIDTH(32),
+       .DATA_WIDTH(32),
+       .MEM_SIZE(256)
     ) dut (
-        .PCLK(vif.pclk),
-        .PRESETn(vif.presetn),
-        .PADDR(vif.paddr),
-        .PWDATA(vif.pwdata),
-        .PSEL(vif.psel),
-        .PENABLE(vif.penable),
-        .PWRITE(vif.pwrite),
-        .PRDATA(vif.prdata),
-        .PREADY(vif.pready),
-        .PSLVERR(vif.pslverr)
+       .PCLK(vif.pclk),
+       .PRESETn(vif.presetn),
+       .PADDR(vif.paddr),
+       .PWDATA(vif.pwdata),
+       .PSEL(vif.psel),
+       .PENABLE(vif.penable),
+       .PWRITE(vif.pwrite),
+       .PRDATA(vif.prdata),
+       .PREADY(vif.pready),
+       .PSLVERR(vif.pslverr)
     );
 
     // Initial Block for UVM Config and Run
