@@ -3,7 +3,7 @@
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
-`include "../../rtl/apb_ram.v"
+`include "../../rtl/apb_ram.sv"
 `include "apb_if.sv"
 `include "apb_test.sv"
 
