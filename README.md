@@ -8,9 +8,9 @@ A scalable **UVM 1.2** verification framework for an **AMBA APB Slave Memory** m
 | :--- | :--- | :--- |
 | **UVM Agent** | ✅ Done | Driver, Monitor, and Sequencer implemented. |
 | **Interface/SVA** | ✅ Done | Protocol handshake stability assertions. |
-| **Scoreboard** | 🔄 In Progress | Implementing associative-array reference model. |
-| **Functional Coverage** | 🔄 In Progress | Defining covergroups for address/data bins. |
-| **Constrained-Random** | 📝 Planned | Random sequence generation and error injection. |
+| **Scoreboard** | ✅ Done | Integrated associative-array reference model. |
+| **Functional Coverage** | ✅ Done | Full covergroups for address/data patterns. |
+| **Constrained-Random** | ✅ Done | Random sequence generation and error injection. |
 
 ## 📐 Environment Architecture
 

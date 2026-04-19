@@ -34,9 +34,9 @@ class apb_scoreboard extends uvm_scoreboard;
         if (tr.pwrite) begin
             if (!tr.pslverr) begin
                 ref_mem[tr.paddr] = tr.pwdata;
-                `uvm_info("APB_SCB", $sformatf("Stored PWDATA='h%08x to ADDR='h%08x in ref_mem", tr.pwdata, tr.paddr), UVM_HIGH)
+                `uvm_info("APB_SCB", $sformatf("WRITE STORE: Addr=0x%0h, Data=0x%0h", tr.paddr, tr.pwdata), UVM_MEDIUM)
             end else begin
-                `uvm_info("APB_SCB", $sformatf("Ignored Write Error at ADDR='h%08x", tr.paddr), UVM_HIGH)
+                `uvm_info("APB_SCB", $sformatf("WRITE ERROR (Skipped): Addr=0x%0h", tr.paddr), UVM_LOW)
             end
         end 
         else begin
@@ -46,20 +46,20 @@ class apb_scoreboard extends uvm_scoreboard;
                 if (ref_mem.exists(tr.paddr)) begin
                     expected_data = ref_mem[tr.paddr];
                 end else begin
-                    // Initial memory state is 0 for our RAM model
-                    expected_data = 32'h00000000; 
+                    expected_data = 32'h00000000; // Default reset value
+                    `uvm_info("APB_SCB", $sformatf("READ UNINITIALIZED: Addr=0x%0h, using default 0x0", tr.paddr), UVM_LOW)
                 end
 
                 if (tr.prdata === expected_data) begin
                     num_matches++;
-                    `uvm_info("APB_SCB", $sformatf("MATCH! ADDR='h%08x PRDATA='h%08x Expected='h%08x", tr.paddr, tr.prdata, expected_data), UVM_LOW)
+                    `uvm_info("APB_SCB", $sformatf("MATCH! Addr=0x%0h, Data=0x%0h", tr.paddr, tr.prdata), UVM_LOW)
                 end else begin
                     num_mismatches++;
-                    `uvm_error("APB_SCB", $sformatf("MISMATCH! ADDR='h%08x PRDATA='h%08x Expected='h%08x", tr.paddr, tr.prdata, expected_data))
+                    `uvm_error("APB_SCB", $sformatf("MISMATCH! Addr=0x%0h, Got=0x%0h, Exp=0x%0h", tr.paddr, tr.prdata, expected_data))
                 end
 
             end else begin
-                `uvm_info("APB_SCB", $sformatf("Ignored Read Error at ADDR='h%08x", tr.paddr), UVM_HIGH)
+                `uvm_info("APB_SCB", $sformatf("READ ERROR (Skipped): Addr=0x%0h", tr.paddr), UVM_LOW)
             end
         end
     endfunction
