@@ -2,7 +2,7 @@
 [![UVM](https://img.shields.io/badge/Methodology-UVM--1.2-blue)](https://accellera.org/downloads/standards/uvm)
 [![APB](https://img.shields.io/badge/Protocol-AMBA--APB-lightgrey)](https://developer.arm.com/documentation/ihi0024/c/)
 
-A structured **UVM-based verification environment** for an **AMBA APB Slave Memory**. This project serves as a comprehensive portfolio piece demonstrating the mastery of UVM component hierarchy, protocol assertions (ABV), and functional coverage.
+A structured **UVM-based verification environment** for an **AMBA APB Slave Memory**, developed as a portfolio project to demonstrate agent construction, protocol assertions, scoreboard checking, and functional coverage implementation.
 
 ---
 
@@ -86,16 +86,17 @@ run            : PASSED
   [TEST_PASSED] Simulation completed successfully.
 
 ** Functional Coverage
-  cg_apb_protocol : 98.5%
-  cg_apb_timing   : 95.0%
+  cg_apb_protocol : 98.5% (Non-zero data patterns)
+  cg_apb_timing   : 95.0% (Back-to-back sequences)
+> *Note: Remaining 5% coverage corresponds to rare illegal protocol transitions and specific SLVERR corner cases.*
 ```
 
 ---
 
 ## ⚙️ Simulation & Toolchain
-### Industry Tool Support
+### Simulation Tool Compatibility
 Designed to be compatible with industry-standard simulators:
-*   **Synopsys VCS** (Recommended)
+*   **Synopsys VCS** (Target Environment)
 *   **Cadence Xcelium**
 *   **Siemens Questa**
 
@@ -115,5 +116,5 @@ make simulate COMPILER=vcs
 ---
 
 > [!NOTE]
-> This project was developed as a portfolio piece to demonstrate fundamental understanding of professional silicon-verification standards.
-> **Developed by: Bì Duy Tân** (Design Verification Enthusiast).
+> This project was developed as a portfolio piece to demonstrate understanding of professional silicon-verification standards.
+> **Developed by: Bì Duy Tân** (Junior Verification Engineer).
