@@ -55,6 +55,14 @@ graph TD
 
 ---
 
+## 📽️ Visual Verification Results
+
+### APB Transaction Waveform (Vivado)
+![APB Waveform](file:///d:/Project/AMBA_APB_UVM/docs/waveform.png)
+*Detailed view of PSEL, PENABLE, and PREADY timing during Read/Write operations.*
+
+---
+
 ## 📊 Verification Matrix (Test Scenarios)
 
 | Test ID | Objective | Stimulus Type | Success Criteria |
