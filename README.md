@@ -1,4 +1,4 @@
-# 🛡️ AMBA APB UVM Verification Portfolio
+# AMBA APB UVM Verification Portfolio
 [![UVM](https://img.shields.io/badge/Methodology-UVM--1.2-blue)](https://accellera.org/downloads/standards/uvm)
 [![APB](https://img.shields.io/badge/Protocol-AMBA--APB-lightgrey)](https://developer.arm.com/documentation/ihi0024/c/)
 
@@ -6,19 +6,19 @@ A structured UVM-based verification environment for an AMBA APB Slave Memory, de
 
 ---
 
-## 🏗 Project Status & Core Features
+## Project Status and Core Features
 
 | Component | Status | Description |
 | :--- | :--- | :--- |
-| UVM Agent | ✅ Done | Complete Active Agent (Sequencer, Driver, Monitor). |
-| Interface/SVA | ✅ Done | 10+ Assertions for PSEL/PENABLE/PREADY protocol checks. |
-| Scoreboard | ✅ Done | Golden reference memory using SV associative arrays. |
-| Functional Coverage | ✅ Done | Covergroups for address space, data patterns, and timing. |
-| Constrained-Random | ✅ Done | Automated stimulus with error injection capabilities. |
+| UVM Agent | Done | Complete Active Agent (Sequencer, Driver, Monitor). |
+| Interface/SVA | Done | 10+ Assertions for PSEL/PENABLE/PREADY protocol checks. |
+| Scoreboard | Done | Golden reference memory using SV associative arrays. |
+| Functional Coverage | Done | Covergroups for address space, data patterns, and timing. |
+| Constrained-Random | Done | Automated stimulus with error injection capabilities. |
 
 ---
 
-## 📐 Environment Architecture
+## Environment Architecture
 
 The environment is designed to be highly modular, ensuring clear separation between protocol driving, monitoring, and checking.
 
@@ -55,7 +55,7 @@ graph TD
 
 ---
 
-## 📽️ Visual Verification Results
+## Visual Verification Results
 
 ### APB Transaction Waveform (Vivado)
 ![APB Waveform](docs/waveform.png)
@@ -63,7 +63,7 @@ graph TD
 
 ---
 
-## 📊 Verification Matrix (Test Scenarios)
+## Verification Matrix (Test Scenarios)
 
 | Test ID | Objective | Stimulus Type | Success Criteria |
 | :--- | :--- | :--- | :--- |
@@ -74,7 +74,7 @@ graph TD
 
 ---
 
-## 📈 Simulation Results & Coverage
+## Simulation Results and Coverage
 
 ### UVM Report Summary
 ```text
@@ -100,7 +100,7 @@ Functional Coverage
 
 ---
 
-## 📄 Verification Evidence (Logs)
+## Verification Evidence (Logs)
 The environment results are logged in detail to verify both normal operation and error handling:
 - **Baseline Simulation**: [sim_results/simulation.log](./sim_results/simulation.log) 
 - **Key Evidence**: See lines prefixed with `!!! ERROR Detected` in the log for `PSLVERR` assertion during unmapped address access.
@@ -110,7 +110,7 @@ The environment results are logged in detail to verify both normal operation and
 
 ---
 
-## ⚙️ Simulation & Toolchain
+## Simulation and Toolchain
 ### Simulation Tool Compatibility
 Designed to be compatible with industry-standard simulators:
 *   **Synopsys VCS** (Target Environment)
@@ -125,7 +125,7 @@ make simulate COMPILER=vcs
 
 ---
 
-## 🔮 Future Enhancements (Roadmap)
+## Future Enhancements (Roadmap)
 - **APB4 Support**: Adding `PPROT` and `PSTRB` coverage and checking.
 - **Register Model**: Integration of **UVM RAL** (Register Abstraction Layer).
 - **Power-Aware Verification**: Assertions for idle cycles and low-power states.
