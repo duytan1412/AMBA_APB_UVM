@@ -97,6 +97,15 @@ Functional Coverage
   cg_apb_protocol : 98.5% (Non-zero data patterns)
   cg_apb_timing   : 95.0% (Back-to-back sequences)
 > *Note: Remaining 5% coverage corresponds to rare illegal protocol transitions and specific SLVERR corner cases.*
+
+---
+
+## 📄 Verification Evidence (Logs)
+The environment results are logged in detail to verify both normal operation and error handling:
+- **Baseline Simulation**: [sim_results/simulation.log](./sim_results/simulation.log) 
+- **Key Evidence**: See lines prefixed with `!!! ERROR Detected` in the log for `PSLVERR` assertion during unmapped address access.
+
+---
 ```
 
 ---
