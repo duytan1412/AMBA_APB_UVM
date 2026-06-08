@@ -114,8 +114,8 @@ The environment results are logged in detail to verify both normal operation and
 
 ## Simulation and Toolchain
 ### Simulation Tool Compatibility
-Designed to be compatible with industry-standard simulators:
-*   **Synopsys VCS** (Target Environment)
+Designed to be portable to common SystemVerilog/UVM simulators:
+*   **Synopsys VCS**
 *   **Cadence Xcelium**
 *   **Siemens Questa**
 
