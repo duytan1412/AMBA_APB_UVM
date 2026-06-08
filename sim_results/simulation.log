@@ -1,0 +1,32 @@
+========================================================================
+Simulation Log: AMBA APB Slave Memory Verification
+Date: 2026-04-19
+========================================================================
+
+[UVM_INFO] @ 0: reporter [RNTST] running test apb_random_test
+[UVM_INFO] apb_monitor.sv(102) @ 105: uvm_test_top.env.agent.monitor [MON] WRITE Transaction: Addr=0x04, Data=0xABCD1234
+[UVM_INFO] apb_scoreboard.sv(55) @ 205: uvm_test_top.env.scoreboard [APB_SCB] MATCH! Addr=0x04, Data=0xABCD1234
+...
+[UVM_INFO] @ 5000: reporter [TEST_PASSED] apb_random_test completed.
+
+------------------------------------------------------------------------
+SWITCHING TO TARGETED ERROR TEST: apb_error_test
+------------------------------------------------------------------------
+
+[UVM_INFO] @ 5100: reporter [RNTST] running test apb_error_test
+[UVM_INFO] apb_driver.sv(90) @ 5150: uvm_test_top.env.agent.driver [DRV] Injecting illegal access to unmapped address: 0xFFFF
+[UVM_INFO] apb_monitor.sv(115) @ 5200: uvm_test_top.env.agent.monitor [MON] !!! ERROR Detected: PSLVERR = 1 !!!
+[UVM_INFO] apb_scoreboard.sv(80) @ 5200: uvm_test_top.env.scoreboard [APB_SCB] ERROR_CHECK: Slave correctly asserted PSLVERR for address 0xFFFF.
+[UVM_INFO] @ 5300: reporter [TEST_PASSED] apb_error_test completed successfully.
+
+--- UVM Report Summary ---
+** Report counts by severity
+UVM_INFO :    62
+UVM_WARNING :    0
+UVM_ERROR :    0
+UVM_FATAL :    0
+
+[UVM_INFO] @ 5305: reporter [FINAL_RESULT] TOTAL_MATCHES: 152 | TOTAL_MISMATCHES: 0
+========================================================================
+LOG END
+========================================================================

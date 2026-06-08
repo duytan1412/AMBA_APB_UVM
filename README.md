@@ -29,11 +29,11 @@ graph TD
         Env --> Agent["APB Agent"]
         Env --> SB["APB Scoreboard"]
         Env --> Cov["APB Functional Coverage"]
-        
+
         Agent --> SQr["Sequencer"]
         Agent --> Drv["Driver"]
         Agent --> Mon["Monitor"]
-        
+
         Mon --> SB
         Mon --> Cov
     end
@@ -62,6 +62,8 @@ graph TD
 *Detailed view of PSEL, PENABLE, and PREADY timing during Read/Write operations.*
 
 ---
+
+See [PORTFOLIO.md](./PORTFOLIO.md) for the scholarship-focused evidence map and verification-plan summary.
 
 ## Verification Matrix (Test Scenarios)
 
@@ -102,7 +104,7 @@ Functional Coverage
 
 ## Verification Evidence (Logs)
 The environment results are logged in detail to verify both normal operation and error handling:
-- **Baseline Simulation**: [sim_results/simulation.log](./sim_results/simulation.log) 
+- **Baseline Simulation**: [sim_results/simulation.log](./sim_results/simulation.log)
 - **Key Evidence**: See lines prefixed with `!!! ERROR Detected` in the log for `PSLVERR` assertion during unmapped address access.
 
 ---
