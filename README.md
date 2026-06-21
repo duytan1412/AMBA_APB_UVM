@@ -1,139 +1,79 @@
 # AMBA APB UVM Verification Portfolio
+
 [![UVM](https://img.shields.io/badge/Methodology-UVM--1.2-blue)](https://accellera.org/downloads/standards/uvm)
 [![APB](https://img.shields.io/badge/Protocol-AMBA--APB-lightgrey)](https://developer.arm.com/documentation/ihi0024/c/)
 
-A structured UVM-based verification environment for an AMBA APB Slave Memory, developed as a portfolio project to demonstrate agent construction, protocol assertions, scoreboard checking, and functional coverage implementation.
+UVM-based verification environment for an AMBA APB slave memory. The project demonstrates agent construction, monitor-to-scoreboard checking, protocol assertions, a connected functional coverage collector, and archived simulation evidence.
 
----
+## Recruiter Quick View
 
-## Project Status and Core Features
+| Evidence | Link |
+|---|---|
+| RTL DUT | [`rtl/apb_ram.sv`](./rtl/apb_ram.sv) |
+| UVM environment | [`tb/uvm`](./tb/uvm) |
+| Protocol interface + SVA | [`tb/uvm/apb_if.sv`](./tb/uvm/apb_if.sv) |
+| Verification plan | [`docs/vplan.md`](./docs/vplan.md) |
+| Regression summary | [`docs/regression_summary.md`](./docs/regression_summary.md) |
+| Coverage summary | [`docs/coverage_report.txt`](./docs/coverage_report.txt) |
+| Simulation log | [`sim_results/simulation.log`](./sim_results/simulation.log) |
+| Waveform | [`docs/waveform.png`](./docs/waveform.png) |
+
+## Implemented Features
 
 | Component | Status | Description |
-| :--- | :--- | :--- |
-| UVM Agent | Done | Complete Active Agent (Sequencer, Driver, Monitor). |
-| Interface/SVA | Done | 10+ Assertions for PSEL/PENABLE/PREADY protocol checks. |
-| Scoreboard | Done | Golden reference memory using SV associative arrays. |
-| Functional Coverage | Done | Covergroups for address space, data patterns, and timing. |
-| Constrained-Random | Done | Automated stimulus with error injection capabilities. |
+|---|---|---|
+| UVM Agent | Implemented | Sequencer, driver, monitor, and APB transaction model |
+| Interface/SVA | Implemented | APB setup/access timing and protocol checks |
+| Scoreboard | Implemented | Golden reference memory with match/mismatch reporting |
+| Functional Coverage | Implemented | Coverage collector connected to monitor analysis port |
+| Test Library | Implemented | Base, random, invalid-boundary, and back-to-back test classes |
 
----
+## Verification Matrix
 
-## Environment Architecture
+| Test ID | Objective | Stimulus Type | Success Criteria |
+|---|---|---|---|
+| `apb_base_test` | Verify directed single write/read cycles | Directed | no SVA errors, scoreboard match |
+| `apb_random_test` | Stress legal memory space observations | Constrained random | no scoreboard mismatches |
+| `apb_error_test` | Exercise invalid boundary behavior | Targeted invalid access | `PSLVERR`/error evidence observed |
+| `apb_b2b_test` | Check back-to-back transfer timing | Directed burst-like loop | correct setup/access sequencing |
 
-The environment is designed to be highly modular, ensuring clear separation between protocol driving, monitoring, and checking.
+## Evidence Policy
+
+- Coverage model source is included and connected; numerical closure must be regenerated from a simulator coverage database before being claimed.
+- GitHub Actions is an honest lint-only smoke path because Icarus Verilog does not provide a full UVM library.
+- Full UVM simulation is intended for VCS, Xcelium, or Questa.
+
+## Run Commands
+
+```bash
+# Full UVM examples
+make simulate COMPILER=vcs TEST=apb_random_test
+make simulate COMPILER=xcelium TEST=apb_error_test
+
+# Lint-only CI/smoke path
+make lint COMPILER=iverilog
+```
+
+For a multi-test command template, see [`scripts/run_regression.ps1`](./scripts/run_regression.ps1).
+
+## Architecture
 
 ```mermaid
 graph TD
-    subgraph TB ["UVM Testbench"]
-        Test["APB Base Test"] --> Env["APB Environment"]
-        Env --> Agent["APB Agent"]
-        Env --> SB["APB Scoreboard"]
-        Env --> Cov["APB Functional Coverage"]
-
-        Agent --> SQr["Sequencer"]
-        Agent --> Drv["Driver"]
-        Agent --> Mon["Monitor"]
-
-        Mon --> SB
-        Mon --> Cov
-    end
-
-    subgraph HI ["Hardware Interface"]
-        IF["APB Interface + SVA"]
-    end
-
-    subgraph RTL ["RTL Design"]
-        DUT["APB Slave Memory"]
-    end
-
-    Drv --> IF
-    IF --> Drv
-    Mon --> IF
-    IF --> DUT
-    DUT --> IF
+    Test[APB Test Library] --> Env[APB Environment]
+    Env --> Agent[APB Agent]
+    Env --> SB[APB Scoreboard]
+    Env --> Cov[APB Coverage]
+    Agent --> Drv[Driver]
+    Agent --> Mon[Monitor]
+    Mon --> SB
+    Mon --> Cov
+    Drv --> IF[APB Interface + SVA]
+    IF --> DUT[APB Slave Memory]
 ```
 
----
+## Roadmap
 
-## Visual Verification Results
-
-### APB Transaction Waveform (Vivado)
-![APB Waveform](docs/waveform.png)
-*Detailed view of PSEL, PENABLE, and PREADY timing during Read/Write operations.*
-
----
-
-See [PORTFOLIO.md](./PORTFOLIO.md) for the scholarship-focused evidence map and verification-plan summary.
-
-## Verification Matrix (Test Scenarios)
-
-| Test ID | Objective | Stimulus Type | Success Criteria |
-| :--- | :--- | :--- | :--- |
-| **apb_base_test** | Verify basic single R/W cycles. | Directed | Protocol compliance (No SVA errors). |
-| **apb_random_test** | Stress test memory space coverage. | CRV (100+ trans) | 100% Scoreboard match. |
-| **apb_error_test** | Verify PSLVERR on unmapped access. | Targeted Error | `PSLVERR == 1` at address boundaries. |
-| **apb_b2b_test** | Check back-to-back transfer timing. | CRV (No Delays) | Correct PENABLE synchronization. |
-
----
-
-## Simulation Results and Coverage
-
-### UVM Report Summary
-```text
---- UVM Report Summary ---
-Report counts by severity
-UVM_INFO :    45
-UVM_WARNING :    0
-UVM_ERROR :    0
-UVM_FATAL :    0
-
-** Phase results
-build          : PASSED
-connect        : PASSED
-run            : PASSED
-  [APB_SCB] Total Matches   : 124
-  [APB_SCB] Total Mismatches: 0
-  [TEST_PASSED] Simulation completed successfully.
-
-Functional Coverage
-  cg_apb_protocol : 98.5% (Non-zero data patterns)
-  cg_apb_timing   : 95.0% (Back-to-back sequences)
-> *Note: Remaining 5% coverage corresponds to rare illegal protocol transitions and specific SLVERR corner cases.*
-
----
-
-## Verification Evidence (Logs)
-The environment results are logged in detail to verify both normal operation and error handling:
-- **Baseline Simulation**: [sim_results/simulation.log](./sim_results/simulation.log)
-- **Key Evidence**: See lines prefixed with `!!! ERROR Detected` in the log for `PSLVERR` assertion during unmapped address access.
-
----
-```
-
----
-
-## Simulation and Toolchain
-### Simulation Tool Compatibility
-Designed to be portable to common SystemVerilog/UVM simulators:
-*   **Synopsys VCS**
-*   **Cadence Xcelium**
-*   **Siemens Questa**
-
-### Run Command (VCS Style)
-```bash
-# Compile and simulate
-make simulate COMPILER=vcs
-```
-
----
-
-## Future Enhancements (Roadmap)
-- **APB4 Support**: Adding `PPROT` and `PSTRB` coverage and checking.
-- **Register Model**: Integration of **UVM RAL** (Register Abstraction Layer).
-- **Power-Aware Verification**: Assertions for idle cycles and low-power states.
-
----
-
-> [!NOTE]
-> This project was developed as a portfolio piece to demonstrate understanding of professional silicon-verification standards.
-> Developed by: Bì Duy Tân (Junior Verification Engineer).
+- APB4 `PPROT`/`PSTRB` checking.
+- Register model / RAL-style mirror.
+- Integration into a combined AXI4-Lite-to-APB platform.

@@ -59,7 +59,9 @@ module tb_top;
         $dumpvars(0, tb_top);
 
         // Run UVM
-        run_test("apb_base_test");
+        run_test();
     end
 
 endmodule
+
+

@@ -6,7 +6,7 @@ This repository demonstrates a reusable UVM verification environment for an AMBA
 ## Verification Architecture
 - UVM active agent: sequencer, driver, and monitor.
 - Scoreboard: golden reference memory using SystemVerilog associative arrays.
-- Assertions: APB protocol checks for PSEL, PENABLE, PREADY, stable controls, and reset behavior.
+- Assertions: APB protocol checks for PSEL/PENABLE sequencing, PREADY completion, and stable controls.
 - Coverage: address-space, data-pattern, timing, operation/error cross coverage.
 - Error injection: unmapped address access validates PSLVERR behavior.
 
@@ -30,3 +30,4 @@ This repository demonstrates a reusable UVM verification environment for an AMBA
 
 ## Scholarship Positioning
 For Synopsys IC Design Scholarship review, this project should be presented as a digital verification project that demonstrates UVM architecture, assertion-based verification, coverage-driven thinking, and AMBA protocol knowledge.
+

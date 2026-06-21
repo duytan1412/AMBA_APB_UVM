@@ -1,0 +1,16 @@
+# APB coverage report summary
+
+Functional coverage source is implemented in `tb/uvm/apb_coverage.sv` and connected in `tb/uvm/apb_env.sv`.
+
+## Coverage intent
+
+| Covergroup | Intent |
+|---|---|
+| `cg_apb_protocol` | address regions, read/write direction, error response observations |
+| `cg_apb_timing` | setup/access and back-to-back timing observations |
+
+## Evidence status
+
+- Coverage collector source: present and connected.
+- Simulator coverage database: not included.
+- Numeric closure: not claimed until regenerated with VCS/Xcelium/Questa.

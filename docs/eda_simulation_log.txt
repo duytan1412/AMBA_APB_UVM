@@ -1,0 +1,8 @@
+# Archived EDA simulation log note
+
+Full UVM simulation is intended for a simulator with UVM library support such as VCS, Xcelium, or Questa.
+
+Current archived evidence:
+- `sim_results/simulation.log` contains baseline pass/error-response evidence.
+- `docs/regression_summary.md` summarizes the test intent.
+- `docs/coverage_report.txt` documents coverage model status without claiming generated closure.

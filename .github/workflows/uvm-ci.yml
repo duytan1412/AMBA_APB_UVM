@@ -1,4 +1,4 @@
-name: UVM Verification CI
+name: APB CI Smoke
 
 on:
   push:
@@ -7,46 +7,18 @@ on:
     branches: [ "master", "main" ]
 
 jobs:
-  lint_and_verify:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Icarus Verilog
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y iverilog grep
-
-    - name: '[LINT] RTL Syntax Check'
-      run: |
-        echo "=== RTL Lint: apb_ram.sv (SystemVerilog) ==="
-        iverilog -g2012 -tnull rtl/apb_ram.sv
-        echo "✅ RTL syntax OK"
-
-    - name: '[LINT] APB Interface (SVA Assertions)'
-      run: |
-        echo "=== Interface Lint: apb_if.sv (4 SVA Properties) ==="
-        iverilog -g2012 -tnull tb/uvm/apb_if.sv 2>/dev/null || echo "⚠️ SVA/UVM imports skipped (expected in iverilog)"
-        echo "✅ SVA interface checked"
-
-    - name: '[LINT] APB Transaction Model'
-      run: |
-        echo "=== Transaction Model: apb_transaction.sv ==="
-        iverilog -g2012 -tnull tb/uvm/apb_transaction.sv 2>/dev/null || echo "⚠️ UVM import skipped (expected in iverilog)"
-        echo "✅ Transaction model checked"
-
-    - name: '[INFO] Full UVM Simulation Details'
-      run: |
-        echo "============================================================"
-        echo "  FULL UVM 1.2 SIMULATION ENVIRONMENT"
-        echo "============================================================"
-        echo ""
-        echo "  Tool:     Cadence Xcelium 20.09 via EDA Playground"
-        echo "  Library:  UVM 1.2 (IEEE 1800.2)"
-        echo "  Status:   PASS (all tests)"
-        echo ""
-        echo "  CI Scope: Syntax lint only (iverilog lacks UVM library)"
-        echo "  Full sim: See docs/eda_simulation_log.txt"
-        echo "============================================================"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog
+      - name: Lint RTL
+        run: iverilog -g2012 -tnull rtl/apb_ram.sv
+      - name: Document UVM simulator requirement
+        run: |
+          echo "Full APB UVM regression requires VCS, Xcelium, or Questa."
+          echo "This CI job is lint-only and intentionally does not claim UVM pass/fail."
