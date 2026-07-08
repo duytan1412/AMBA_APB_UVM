@@ -17,6 +17,9 @@ UVM-based verification environment for an AMBA APB slave memory. The project dem
 | Coverage summary | [`docs/coverage_report.txt`](./docs/coverage_report.txt) |
 | Simulation log | [`sim_results/simulation.log`](./sim_results/simulation.log) |
 | Waveform | [`docs/waveform.png`](./docs/waveform.png) |
+| Waveform walkthrough | [`docs/apb_waveform_walkthrough.md`](./docs/apb_waveform_walkthrough.md) |
+| Reset/wait-state plan | [`docs/reset_wait_state_plan.md`](./docs/reset_wait_state_plan.md) |
+| Evidence policy | [`docs/evidence_policy.md`](./docs/evidence_policy.md) |
 
 ## Waveform Preview
 
