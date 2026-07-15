@@ -64,19 +64,9 @@ For a multi-test command template, see [`scripts/run_regression.ps1`](./scripts/
 
 ## Architecture
 
-```mermaid
-graph TD
-    Test[APB Test Library] --> Env[APB Environment]
-    Env --> Agent[APB Agent]
-    Env --> SB[APB Scoreboard]
-    Env --> Cov[APB Coverage]
-    Agent --> Drv[Driver]
-    Agent --> Mon[Monitor]
-    Mon --> SB
-    Mon --> Cov
-    Drv --> IF[APB Interface + SVA]
-    IF --> DUT[APB Slave Memory]
-```
+![APB UVM verification architecture](docs/apb_uvm_architecture.png)
+
+Editable source: [`docs/apb_uvm_architecture.drawio`](docs/apb_uvm_architecture.drawio).
 
 ## Roadmap
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-15T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="80445fad7700" name="APB UVM Architecture">
+    <mxGraphModel dx="1250" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1250" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="test" value="APB Test
+Library" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="150" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="env" value="APB
+Environment" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="80" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent" value="APB
+Agent" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="80" width="150" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="driver" value="Driver" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="250" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="mon" value="Monitor" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="250" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="iface" value="APB Interface
++ SVA" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="440" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="dut" value="APB Slave
+Memory" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="440" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="score" value="APB
+Scoreboard" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="210" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="cov" value="APB
+Coverage" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#1f2937;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="370" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="test" target="env">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="env" target="agent">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="agent" target="driver">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="agent" target="mon">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="driver" target="iface">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="iface" target="dut">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="mon" target="score">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#375a7f;" edge="1" parent="1" source="mon" target="cov">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
